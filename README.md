@@ -2,7 +2,7 @@
 
 ## How to engage the app:
 
-Well first I ought to tell you that there are 2 apps within this project:
+A tournament is a multiplayer game, comprised of several rounds. Each round has 10 of multi-choice questions that comprise it which users need to answer. Essentially a tournament like a multiplayer game of "Who wants to be a Millionaire". After the tournament has finished, the Tournaments Service sends the results of the tournament via an API call to a Tournament Statistics Service. This service receives the tournament results and exposes several other APIs which allow to fetch some statistics on a given tournament.
 
 - [Backend app](https://github.com/Danielg212/tournament-stats-/tree/master/api) has the database
 
