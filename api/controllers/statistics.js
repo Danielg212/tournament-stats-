@@ -1,52 +1,56 @@
-import SuccessPerQuestion from "../models/SuccessPerQuestion.js";
-import UsersScores from "../models/UserScore.js";
+import {StatisticsService} from "../services/statisticsService.js";
 
 const fetchSuccessPerQuestion = async (request, response) => {
   const tournamentId = request.params.tournamentId;
-  try {
-    const stats = await SuccessPerQuestion.findOne(
-        {
-          tournamentId: tournamentId,
-        },
-        "-_id -__v"
-    );
-    if (!stats) {
-      response.status(404).json({
-        message: "Success per question id not found",
-        id: tournamentId,
-      });
-    } else {
-      response.status(200).json({ stats });
-    }
-  } catch (error) {
-    console.log(error);
-    response.status(500).json(error);
-  }
+  await StatisticsService.fetchSuccessPerQuestion(tournamentId,(error, result) => {
+      if (error) {
+          console.log(error.message);
+          response.status(500).json(error.message);
+      }
+      if (!result) {
+          response.status(404).json({
+              message: "question id not found!",
+              id: tournamentId,
+          });
+      } else {
+          response.status(200).json({result});
+      }
+  })
 
 };
 
 const fetchUsersScores = async (request, response) => {
   const tournamentId = request.params.tournamentId;
-  try {
-    const stats = await UsersScores.findOne(
-        {
-          tournamentId: tournamentId,
-        },
-        "-_id -__v"
-    )
-    if (!stats) {
-      response.status(404).json({
-        message: "Users score's Id not found",
-        id: tournamentId,
-      });
-    } else {
-      response.status(200).json({ stats });
-    }
-  } catch (error) {
-    console.log(error);
-    response.status(500).json(error);
-  }
+  await StatisticsService.fetchUsersScores(tournamentId,(error, result) => {
+      if (error) {
+          console.log(error.message);
+          response.status(500).json(error.message);
+      }
+      if (!result) {
+          response.status(404).json({
+              message: "Users score's Id not found",
+              id: tournamentId,
+          });
+      } else {
+          response.status(200).json({ result });
+      }
+
+  })
 
 };
 
-export { fetchSuccessPerQuestion ,fetchUsersScores };
+const fetchTournamentStatistics  = async (request, response) => {
+    const tournamentId = request.params.tournamentId;
+    try {
+        const usersScores = await StatisticsService.fetchUsersScores(tournamentId)
+        const questionsRate = await StatisticsService.fetchSuccessPerQuestion(tournamentId);
+        response.status(200).json({ usersScores,questionsRate });
+    }catch (e) {
+        console.error(e.message)
+        response.status(500).json(e.message);
+    }
+
+
+}
+
+export { fetchSuccessPerQuestion ,fetchUsersScores,fetchTournamentStatistics };

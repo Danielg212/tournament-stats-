@@ -15,7 +15,7 @@ export const calculateSuccessRate = (tournaments) => {
     });
 }
 
-export const toLetterScore = (percent) => {
+ const toLetterScore = (percent) => {
     if (percent >= 90) {
         return 'A';
     }
@@ -26,4 +26,12 @@ export const toLetterScore = (percent) => {
         return 'C';
     }
     return 'F';
+}
+
+export function getNormalizeUsersScores(request) {
+    return request.map((item) => {
+        const successRate = (item.correctQuestions.length / 10) * 100
+        const letterScore = toLetterScore(successRate);
+        return {user: item.userId, rank: letterScore}
+    });
 }

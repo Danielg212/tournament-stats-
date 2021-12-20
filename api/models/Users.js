@@ -5,5 +5,5 @@ const UsersSchema = mongoose.Schema({
     lastName: String,
     address: String,
 });
-const modelName = "Users";
+const modelName = "User";
 export default mongoose.model(modelName, UsersSchema);

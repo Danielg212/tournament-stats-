@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./Users.js";
 
 const tournamentSchema = mongoose.Schema({
   startDate: { type: Date, required: true },
@@ -6,12 +7,11 @@ const tournamentSchema = mongoose.Schema({
   results: [
     {
       _id: false,
-      userId: Number,
+      userId:  {type: mongoose.Schema.Types.ObjectId, ref: User},
       correctQuestions: [Number],
       incorrectQuestions: [Number],
     },
   ],
-  //   users: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }], //TODO לדחוף פה הכל בתור התחלה
 });
 const modelName = "Tournament";
 export default mongoose.model(modelName, tournamentSchema);

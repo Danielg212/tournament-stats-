@@ -1,7 +1,7 @@
 import Tournament from "../models/Tournament.js";
 import SuccessRate from "../models/SuccessPerQuestion.js";
 import UserScore from "../models/UserScore.js";
-import {calculateSuccessRate, toLetterScore} from "../utils/utils.js";
+import {calculateSuccessRate, getNormalizeUsersScores} from "../utils/utils.js";
 
 const saveTournamentResults = async (request, response) => {
     try {
@@ -12,12 +12,7 @@ const saveTournamentResults = async (request, response) => {
         const successRate = new SuccessRate({tournamentId: tournament._id, stats: successRateStats});
         await successRate.save()
 
-        const normalizeUsersScores = request.body.results.map((item) => {
-            const successRate = (item.correctQuestions.length / 10) * 100
-            const letterScore = toLetterScore(successRate);
-            return {userId: item.userId, rank: letterScore}
-        });
-
+        const normalizeUsersScores = getNormalizeUsersScores(request.body.results);
         const usersScore = new UserScore({tournamentId: tournament._id, stats: normalizeUsersScores})
         await usersScore.save()
 
@@ -30,7 +25,7 @@ const saveTournamentResults = async (request, response) => {
         response.status(500).json(e.message);
     }
 };
-const getTournamentResults = async (request, response, next) => {
+const getTournamentResults = async (request, response) => {
     const tournamentId = request.params.tournamentId;
     try {
         const tournament = await Tournament.findOne(
