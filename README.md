@@ -1,4 +1,4 @@
-# tournament-stats
+# Tournament-stats
 
 ## How to engage the app:
 
