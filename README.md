@@ -42,6 +42,38 @@ In order to launch the development session, follow these instructions:
 > &nbsp;&nbsp; ],<br />
 }<br />
 
+
+for example:
+
+ **POST  localhost:5000/api/saveTournamentResults**
+```json
+{
+   "startDate": "2020-12-03T09:35:35+00:00",
+   "endDateTime": "2020-12-03T12:35:35+00:00",
+   "results": [{
+                   "userId": "61bf268f5c8823fb8106cdb6",
+                   "correctQuestions": [1,2,3,4,5,6],
+                   "incorrectQuestions": [7,8,9,10]
+               },
+               {
+                   "userId": "61bf27145c8823fb8106cdb7",
+                   "correctQuestions": [1,2,3,4,5,6,8,7,10],
+                   "incorrectQuestions": [9]
+               },
+               {
+                   "userId": "61bf273c5c8823fb8106cdb8",
+                   "correctQuestions": [1],
+                   "incorrectQuestions": [2,3,4,5,6,7,8,9,10]
+               },
+               {
+                   "userId": "61bf275f5c8823fb8106cdb9",
+                   "correctQuestions": [3,6,10],
+                   "incorrectQuestions": [2,4,5,7,8,9]
+               }]
+}
+
+```
+
 <br>
 
 #### Get `/getTournamentResults`
@@ -72,6 +104,6 @@ In order to launch the development session, follow these instructions:
 
 
 
-<img src='./README_IMG/architectureDB.png'/>
+<img src='./README_IMG/architectureDB.png' alt="mono architectureDB"/>
 
 P.S. You need the credentials for the `MONGO_URI` in order to connect to db.
