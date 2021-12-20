@@ -70,4 +70,8 @@ In order to launch the development session, follow these instructions:
 
 > :tournamentId === mongoose.Schema.Types.ObjectId
 
+
+
+<img src='./README_IMG/architectureDB.png'/>
+
 P.S. You need the credentials for the `MONGO_URI` in order to connect to db.
